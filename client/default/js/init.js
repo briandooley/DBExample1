@@ -30,4 +30,28 @@ $fh.ready(function() {
     );
   };
   
+  document.getElementById('list_button').onclick = function() {
+    $fh.act(
+      {
+        act:'listInfo',
+        req: {
+          type: 'myFirstEntity'
+        }
+      },
+      function(res) {
+        console.log(res);
+        var res = res.list;
+        document.getElementById('cloudConfig').innerHTML = '';
+        for(var i=0; i<res.length; i++){
+          var name = res[i].fields.name;
+          var work = res[i].fields.work;
+          document.getElementById('cloudConfig').innerHTML += "<p>Name: " + name + "<br/>Work: "+work+"</p>";
+        }
+        
+      },
+      function(code,errorprops,params) {
+        alert('An error occured: ' + code + ' : ' + errorprops);
+      }
+    );
+  };
 });
